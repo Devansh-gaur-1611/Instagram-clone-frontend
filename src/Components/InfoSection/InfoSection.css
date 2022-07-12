@@ -1,0 +1,46 @@
+.Info_image {
+  /* height: 75px;
+  width: 75px; */
+  margin-top: 0px;
+  min-width: 65px;
+  min-height: 65px;
+}
+.Infosection_container {
+  height: 56px;
+  width: 300px;
+  margin-top: 50px;
+  display: flex;
+}
+
+.InfoSection_left{
+  height: 56px;
+  width: 300px;
+  display: flex;
+}
+.info_gyaan {
+    margin: 5px;
+  margin-top: 8px;
+  margin-left: 10px;
+  
+}
+
+.InfoSection_right{
+  display: flex;
+  align-items: center;
+  justify-content:center;
+}
+
+.btn_logout{
+  color: #0095f6;
+  background-color:transparent;
+  outline:none;
+  border: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width:1000px) {
+  .Infosection_container{
+    display:none
+  }
+
+}
