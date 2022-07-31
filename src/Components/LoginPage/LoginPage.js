@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
-import Grid from "@material-ui/core/Grid";
 import insta_image from "../../images/9364675fb26a.svg";
 import insta_logo from "../../images/logoinsta.png";
 import fb from "../../images/fb.png";
@@ -8,12 +7,23 @@ import playstore from "../../images/play.png";
 import appstore from "../../images/app.png";
 import "./LoginPage.css";
 import axios from "axios"
+import { FbLogin } from "./FbLogin"
+import Loader from "../Loader/Loader"
+import { useDispatch, useSelector } from "react-redux"
+import { setLoading, getLoading } from "../../features/Loading/LoadingSlice"
+import { useSnackbar } from "notistack"
 
 function LoginPage() {
   const navigate = useNavigate()
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const dispatch = useDispatch()
+  const loadingState = useSelector(getLoading)
+  const { enqueueSnackbar } = useSnackbar();
+
+
   const signin = () => {
+    dispatch(setLoading(true))
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -24,21 +34,28 @@ function LoginPage() {
       password: password,
     };
     axios.post(process.env.REACT_APP_BACKEND_URL + "api/user/login", data, config).then((response) => {
+      dispatch(setLoading(false))
       console.log(response);
-      localStorage.setItem("userId",response.data.id)
-      localStorage.setItem("access_token",response.data.access_token)
-      localStorage.setItem("refresh_token",response.data.refresh_token)
-
-      alert("Login successful")
+      localStorage.setItem("userId", response.data.id)
+      localStorage.setItem("access_token", response.data.access_token)
+      localStorage.setItem("refresh_token", response.data.refresh_token)
+      enqueueSnackbar("Logged in successfully", {
+        variant: 'success',
+      });
       navigate("/")
     })
       .catch((error) => {
         console.log("hi");
         console.log(error);
+        enqueueSnackbar("Invalid  Credentials", {
+          variant: 'error',
+        });
+        dispatch(setLoading(false))
       });
   };
   return (
-    <div>
+    <>
+      {loadingState.loading && <Loader />}
       <div className="LoginPage_main_container">
         <div className="LoginPage_container">
           <div className="LoginPage_main">
@@ -54,15 +71,17 @@ function LoginPage() {
                       className="LoginPage_text"
                       type="text"
                       placeholder="Phone number, username or email"
-                      onChange={(e)=>setEmail(e.target.value)}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                       className="LoginPage_text"
                       type="password"
                       placeholder="Password"
-                      onChange={(e)=>setPassword(e.target.value)}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button className="LoginPage_button" onClick={()=>signin()}>Sign In</button>
+                    <button className="LoginPage_button"
+                      onClick={() => signin()}
+                    >Sign In</button>
                   </div>
 
                   <div className="Login_ordiv">
@@ -70,7 +89,7 @@ function LoginPage() {
                     <div className="Login_or">OR</div>
                     <div className="Login_divider"></div>
                   </div>
-                  <div className="Login_fb">
+                  <div className="Login_fb" onClick={() => FbLogin()} >
                     <img src={fb} width="15px" style={{ marginRight: "5px" }} alt="play" />
                     Log in with facebook
                   </div>
@@ -97,7 +116,7 @@ function LoginPage() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

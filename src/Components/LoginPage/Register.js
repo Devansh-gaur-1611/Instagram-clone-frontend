@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
 import insta_image from "../../images/9364675fb26a.svg";
 import insta_logo from "../../images/logoinsta.png";
 import fb from "../../images/fb.png";
@@ -8,6 +7,10 @@ import playstore from "../../images/play.png";
 import appstore from "../../images/app.png";
 import "./LoginPage.css";
 import { FbLogin, signup } from "./FbLogin"
+import Loader from "../Loader/Loader"
+import { useDispatch, useSelector } from "react-redux"
+import { setLoading, getLoading } from "../../features/Loading/LoadingSlice"
+import { useSnackbar } from "notistack"
 
 function Register() {
   const navigate = useNavigate();
@@ -15,11 +18,15 @@ function Register() {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const dispatch = useDispatch()
+  const loadingState = useSelector(getLoading)
+  const { enqueueSnackbar } = useSnackbar();
   
 
 
   return (
     <div>
+      {loadingState.loading && <Loader/>}
        <div className="LoginPage_main_container">
         <div className="LoginPage_container">
           <div className="LoginPage_main">
@@ -36,7 +43,7 @@ function Register() {
                     <input className="LoginPage_text" type="text" placeholder="Full Name" onChange={(e) => setName(e.target.value)} />
                     <input className="LoginPage_text" type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
                     <input className="LoginPage_text" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                    <button className="LoginPage_button" onClick={() => signup(name,username,email,password)}>
+                    <button className="LoginPage_button" onClick={() => signup(name,username,email,password,dispatch,enqueueSnackbar,navigate)}>
                       Sign Up
                     </button>
                   </div>

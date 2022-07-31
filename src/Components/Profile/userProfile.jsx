@@ -11,6 +11,7 @@ import NavBar from "../NavBar/NavBar";
 import UploadPhoto from "./uploadPhoto";
 import { uploadFiles } from "./helper";
 import BottomBar from "../NavBar/Navbar_BottomBar";
+import { useDispatch, useSelector } from "react-redux"
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const UserProfile = () => {
   const [followStatus, setFollowStatus] = useState(userProfile.follow_by_viewer);
   const image_Input = useRef();
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const SuccessFxn_profile = (response) => {
@@ -40,13 +42,15 @@ const UserProfile = () => {
       "api/user/profile?userName=" + userName + "&viewerId=" + localStorage.getItem("userId"),
       SuccessFxn_profile,
       enqueueSnackbar,
-      navigate
+      navigate,
+      dispatch
     );
     GetAuthRequest(
       "api/post/reels_tray?userName=" + userName + "&size=12&nextToken=" + nextToken,
       SuccessFxn_posts,
       enqueueSnackbar,
-      navigate
+      navigate,
+      dispatch
     );
   }, []);
 

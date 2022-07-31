@@ -12,6 +12,7 @@ import { Avatar } from '@material-ui/core';
 import Comment from "./Comment"
 import Navbar from "../NavBar/NavBar"
 import BottomBar from "../NavBar/Navbar_BottomBar"
+import { useDispatch, useSelector } from "react-redux"
 
 const PostsPage = () => {
   const params = useParams()
@@ -26,6 +27,7 @@ const PostsPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const commentBox = useRef()
   const commentBox_large = useRef()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const successFunction = (response) => {
@@ -36,7 +38,7 @@ const PostsPage = () => {
       setCommentCount(response.data.post.postComments.length)
       setCommentArray(response.data.post.postComments)
     }
-    GetAuthRequest("api/post/get?slug=" + slug + "&userId=" + localStorage.getItem("userId"), successFunction, enqueueSnackbar, navigate)
+    GetAuthRequest("api/post/get?slug=" + slug + "&userId=" + localStorage.getItem("userId"), successFunction, enqueueSnackbar, navigate, dispatch)
   }, [])
 
   const changeLikesBackend = () => {
@@ -95,7 +97,7 @@ const PostsPage = () => {
                 {(post && post.postType === "image") && <img src={post.postFileUrl} alt="image1" className={styles.post_image_file} />}
                 {(post && post.postType === "video") &&
                   <>
-                    <video className={styles.post_image_file} controls autoPlay muted style={{border:"none", outline: "none"}}>
+                    <video className={styles.post_image_file} controls autoPlay muted style={{ border: "none", outline: "none" }}>
                       <source src={post.postFileUrl} type="video/mp4" />
                     </video>
                   </>}
@@ -121,7 +123,7 @@ const PostsPage = () => {
                 <div style={{ "marginLeft": "10px" }}>
                   <img src={(likeStatus) ? liked : notLiked} alt="imagei" className={styles.post_reactimage} onClick={() => changeLike()}
                   />
-                  <img src={CommentIcon} alt="imagei" className={styles.post_reactimage} onClick={() => commentBox.current.focus()} />
+                  <img src={CommentIcon} alt="imagei" className={styles.post_reactimage} onClick={() => commentBox_large.current.focus()} />
                   <img src={share} alt="imagei" className={styles.post_reactimage} onClick={() => shareHandler()} />
                 </div>
                 <div className={styles.post_like}>
@@ -176,7 +178,7 @@ const PostsPage = () => {
               <img src={(likeStatus) ? liked : notLiked} alt="imagei" className={styles.post_reactimage} onClick={() => changeLike()}
               />
               <img src={CommentIcon} alt="imagei" className={styles.post_reactimage} onClick={() => commentBox.current.focus()} />
-              <img src={share} alt="imagei" className={styles.post_reactimage} onClick={()=>shareHandler()}/>
+              <img src={share} alt="imagei" className={styles.post_reactimage} onClick={() => shareHandler()} />
             </div>
             <div className={styles.post_like}>
               {likeCount} likes

@@ -1,13 +1,26 @@
-import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {useEffect} from "react"
 import LoginPage from "./Components/LoginPage/LoginPage";
 import HomePage from "./Components/HomePage/HomePage";
 import SignupPage from "./Components/LoginPage/Register"
 import { useVideoAutoplay } from "./Components/Post/videoAutoPlay"
 import UserProfile from "../src/Components/Profile/userProfile"
 import PostsPage from "./Components/Post/PostsPage";
+import {useSelector} from "react-redux"
+import {getLoading} from "./features/Loading/LoadingSlice"
+
 function App() {
   useVideoAutoplay()
+  const loadingState = useSelector(getLoading)
+
+  useEffect(() => {
+    if (loadingState && loadingState.loading==true) {
+      document.body.style.overflow = 'hidden'
+    }else{
+      document.body.style.overflow = 'auto'
+    }
+  }, [loadingState.loading])
+
   return (
     <Router>
       <div className="App">

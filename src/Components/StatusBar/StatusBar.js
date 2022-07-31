@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { AiOutlinePlus } from "react-icons/ai"
 import { uploadFiles } from "./helper"
 import StoriesPage from "./Stories";
+import { useDispatch, useSelector } from "react-redux"
 
 
 const StatusBar = () => {
@@ -16,12 +17,13 @@ const StatusBar = () => {
   const input = useRef()
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const SuccessFxn = (response) => {
       setStatusList(response.data.status)
     }
-    GetAuthRequest("api/status/fetch?userId=" + localStorage.getItem("userId"), SuccessFxn, enqueueSnackbar, navigate);
+    GetAuthRequest("api/status/fetch?userId=" + localStorage.getItem("userId"), SuccessFxn, enqueueSnackbar, navigate, dispatch);
   }, [])
 
 
@@ -44,7 +46,7 @@ const StatusBar = () => {
   }, [isOpen])
 
   return (<>
-    {isOpen && <StoriesPage setIsOpen={setIsOpen} statusUrls = {statusUrls}/>}
+    {isOpen && <StoriesPage setIsOpen={setIsOpen} statusUrls={statusUrls} />}
     {(statusList && statusList.length > 0) &&
       <div>
         <div className="statusbar_container">

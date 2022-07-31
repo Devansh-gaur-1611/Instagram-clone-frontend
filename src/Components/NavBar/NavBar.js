@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { setUser, getUser } from "../../features/User/UserSlice"
 import { useSnackbar } from 'notistack';
 import { useNavigate } from "react-router-dom"
+import { setLoading, getLoading } from "../../features/Loading/LoadingSlice"
+import Loader from "../Loader/Loader"
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -16,32 +18,35 @@ function NavBar() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const loadingState = useSelector(getLoading)
   useEffect(() => {
     console.log("object");
     const SuccessFxn = (response) => {
       dispatch(setUser(response.data.user))
     }
     if (!current_user.user) {
-      GetAuthRequest("api/user/profile/isUser?userId=" + localStorage.getItem("userId"), SuccessFxn, enqueueSnackbar, navigate);
+      GetAuthRequest("api/user/profile/isUser?userId=" + localStorage.getItem("userId"),
+        SuccessFxn, enqueueSnackbar, navigate, dispatch);
     }
   }, [])
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
-    }else{
+    } else {
       document.body.style.overflow = 'auto'
     }
   }, [isOpen])
-  
+
 
   return (
     <>
       {isOpen && <NewPostModal setIsOpen={setIsOpen} />}
+      {loadingState.loading && <Loader />}
       <div className={styles.navbar}>
         <div className={styles.main_container}>
-        <div className={`${styles.icon} ${styles.small_screen}`} >
-          <svg aria-label="New Story" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><circle cx="12" cy="13.191" fill="none" r="4.539" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></circle><path d="M18.592 21.374A3.408 3.408 0 0022 17.966V8.874a3.41 3.41 0 00-3.41-3.409h-.52a2.108 2.108 0 01-1.954-1.375 2.082 2.082 0 00-2.204-1.348h-3.824A2.082 2.082 0 007.884 4.09 2.108 2.108 0 015.93 5.465h-.52A3.41 3.41 0 002 8.875v9.091a3.408 3.408 0 003.408 3.408z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path></svg>
-        </div>
+          <div className={`${styles.icon} ${styles.small_screen}`} >
+            <svg aria-label="New Story" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><circle cx="12" cy="13.191" fill="none" r="4.539" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></circle><path d="M18.592 21.374A3.408 3.408 0 0022 17.966V8.874a3.41 3.41 0 00-3.41-3.409h-.52a2.108 2.108 0 01-1.954-1.375 2.082 2.082 0 00-2.204-1.348h-3.824A2.082 2.082 0 007.884 4.09 2.108 2.108 0 015.93 5.465h-.52A3.41 3.41 0 002 8.875v9.091a3.408 3.408 0 003.408 3.408z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </div>
           <div className={styles.logo_container}>
             <img className={styles.navbar_logo} src={insta_logo} alt="instalogo" width="105px" onClick={() => { navigate("/") }} />
           </div>
@@ -67,7 +72,7 @@ function NavBar() {
               <svg aria-label="Activity Feed" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path></svg>
             </div>
             <div className={styles.icon}>
-              <Avatar className={styles.profile_pic} src={current_user.user && current_user.user.profileImageUrl}  onClick={() => navigate("/" + current_user.user.userName)} />
+              <Avatar className={styles.profile_pic} src={current_user.user && current_user.user.profileImageUrl} onClick={() => navigate("/" + current_user.user.userName)} />
             </div>
           </div>
         </div>
