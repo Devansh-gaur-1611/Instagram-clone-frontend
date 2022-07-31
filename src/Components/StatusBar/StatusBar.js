@@ -10,6 +10,7 @@ import StoriesPage from "./Stories";
 import { useDispatch, useSelector } from "react-redux"
 
 
+
 const StatusBar = () => {
   const [statusList, setStatusList] = useState([])
   const [statusUrls, setStatusUrls] = useState([])
@@ -33,8 +34,7 @@ const StatusBar = () => {
       alert("status added successfully")
       window.location.reload()
     }
-
-    uploadFiles(e.target.files[0], successFxn, enqueueSnackbar, navigate)
+    uploadFiles(e.target.files[0], successFxn, enqueueSnackbar, navigate,dispatch)
   }
 
   useEffect(() => {
