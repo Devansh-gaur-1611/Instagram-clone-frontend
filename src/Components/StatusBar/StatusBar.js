@@ -47,7 +47,7 @@ const StatusBar = () => {
 
   return (<>
     {isOpen && <StoriesPage setIsOpen={setIsOpen} statusUrls={statusUrls} />}
-    {(statusList && statusList.length > 0) &&
+    {/* {(statusList && statusList.length > 0) && */}
       <div>
         <div className="statusbar_container">
           <div className="status">
@@ -55,7 +55,7 @@ const StatusBar = () => {
             <Avatar className="statusbar_status_create" onClick={() => { input.current.click() }}>
               <AiOutlinePlus fontSize="30px" />
             </Avatar>
-            <div className="statusbar_text">Create</div>
+            <div className="statusbar_text">Create Story</div>
           </div>
           {
             statusList.map((item, index) => (
@@ -73,7 +73,7 @@ const StatusBar = () => {
             ))
           }
         </div>
-      </div>}
+      </div>
   </>
   );
 }
