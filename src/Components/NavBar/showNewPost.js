@@ -3,18 +3,20 @@ import styles from "./NewPostModal.module.css";
 import { uploadFiles } from "./helper"
 import { useNavigate } from "react-router-dom"
 import { useSnackbar } from 'notistack';
+import { useDispatch } from "react-redux"
 
 const ShowNewPostModal = ({ setNewPostViewOpen, file }) => {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
-    const sharePost = ()=>{
-        const successFxn = (response)=>{
+    const sharePost = () => {
+        const successFxn = (response) => {
             console.log(response)
             alert("Post created successfully")
             setNewPostViewOpen(false)
         }
-        uploadFiles(file, file.type.split("/")[0],successFxn,enqueueSnackbar,navigate)
+        uploadFiles(file, file.type.split("/")[0], successFxn, enqueueSnackbar, navigate, dispatch)
     }
 
 
@@ -51,7 +53,7 @@ const ShowNewPostModal = ({ setNewPostViewOpen, file }) => {
                         {(file.type.split("/")[0] === "video") &&
                             <>
                                 <video width="320" height="240" controls className={styles.imgPreview}>
-                                    <source src={URL.createObjectURL(file)}  type={file.type} />
+                                    <source src={URL.createObjectURL(file)} type={file.type} />
                                     {/* <source src="movie.ogg" type="video/ogg" /> */}
                                 </video>
                             </>}
