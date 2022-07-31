@@ -16,3 +16,15 @@
   transform: translate(-50%, -50%);
   z-index: 4;
 }
+
+.closeBtn{
+  position:absolute;
+    right:20px;
+    top:20px;
+    background-color: transparent;
+    z-index: 30;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    /* color: white; */
+}
