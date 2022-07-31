@@ -11,7 +11,7 @@ import NavBar from "../NavBar/NavBar";
 import UploadPhoto from "./uploadPhoto";
 import { uploadFiles } from "./helper";
 import BottomBar from "../NavBar/Navbar_BottomBar";
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -25,12 +25,14 @@ const UserProfile = () => {
   const [followStatus, setFollowStatus] = useState(userProfile.follow_by_viewer);
   const image_Input = useRef();
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch()
+  const [followersCount, setFollowersCount] = useState(0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const SuccessFxn_profile = (response) => {
       setUserProfile(response.data.user);
       setFollowStatus(response.data.user.follow_by_viewer);
+      setFollowersCount(response.data.user.followers.length);
       console.log(response);
     };
     const SuccessFxn_posts = (response) => {
@@ -87,6 +89,7 @@ const UserProfile = () => {
       };
       const SuccessFxn = (response) => {
         setFollowStatus(false);
+        setFollowersCount(followersCount - 1);
       };
       PostAuthRequest("api/user/follow", data, SuccessFxn, enqueueSnackbar, navigate);
     } else {
@@ -98,6 +101,7 @@ const UserProfile = () => {
 
       const SuccessFxn = (response) => {
         setFollowStatus(true);
+        setFollowersCount(followersCount + 1);
       };
       PostAuthRequest("api/user/follow", data, SuccessFxn, enqueueSnackbar, navigate);
     }
@@ -176,9 +180,7 @@ const UserProfile = () => {
                   <span className={styles.text}>posts</span>
                 </div>
                 <div className={styles.post_counters_container}>
-                  <span className={styles.count}>
-                    {userProfile && userProfile.followers ? userProfile.followers.length : "0"}
-                  </span>
+                  <span className={styles.count}>{userProfile && userProfile.followers ? followersCount : "0"}</span>
                   <span className={styles.text}>followers</span>
                 </div>
                 <div className={styles.post_counters_container}>

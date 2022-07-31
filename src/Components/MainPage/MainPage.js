@@ -4,6 +4,7 @@ import "./MainPage.css"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { setPost, setNextToken, getPost } from "../../features/Post/PostSlice"
+import Loader_small from "../Loader/Loader_small"
 const MainPage = () => {
 
     const dispatch = useDispatch()
@@ -79,7 +80,7 @@ const MainPage = () => {
                 }
             })
         }
-        {loading && <p>Loading................</p>}
+        {loading && <Loader_small/>}
     </div>;
 
 }
