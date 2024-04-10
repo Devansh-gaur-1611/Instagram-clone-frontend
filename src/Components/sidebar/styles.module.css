@@ -1,0 +1,59 @@
+.avatar{
+    width: 24px !important;
+    height: 24px !important;
+}
+.drawer{
+    width: 240px;
+}
+.drawer_paper{
+    width: 240px;
+}
+.logo_small{
+    display: none;
+}
+.listItemLogo{
+    margin-bottom: 20px;
+}
+.listItemLogo{
+    height: 48px;
+}
+
+@media screen and (max-width:1260px){
+    .drawer{
+        width: 68px !important;
+    }
+    .drawer_paper{
+        width: 68px !important;
+    }
+    .text{
+        display: none;
+    }
+    .icon{
+        min-width: 30px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .listItemBtn{
+        display: flex;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 48px !important;
+    }
+    .logo_small{
+        display: flex;
+    }
+    .logo_large{
+        display: none;
+    }
+    .listItemLogo{
+        justify-content: center !important;
+        height: 48px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .drawer{
+        display: none;
+    }
+}

@@ -1,29 +1,28 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import insta_image from "../../images/9364675fb26a.svg";
 import insta_logo from "../../images/logoinsta.png";
 import fb from "../../images/fb.png";
 import playstore from "../../images/play.png";
 import appstore from "../../images/app.png";
 import "./LoginPage.css";
-import axios from "axios"
-import { FbLogin } from "./FbLogin"
-import Loader from "../Loader/Loader"
-import { useDispatch, useSelector } from "react-redux"
-import { setLoading, getLoading } from "../../features/Loading/LoadingSlice"
-import { useSnackbar } from "notistack"
+import axios from "axios";
+import { googleSignIn } from "./FbLogin";
+import Loader from "../Loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading, getLoading } from "../../features/Loading/LoadingSlice";
+import { useSnackbar } from "notistack";
 
 function LoginPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const dispatch = useDispatch()
-  const loadingState = useSelector(getLoading)
+  const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
-
-  const signin = () => {
-    dispatch(setLoading(true))
+  const signin = (e) => {
+    e.preventDefault();
+    setLoading(true);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -33,29 +32,35 @@ function LoginPage() {
       email: email,
       password: password,
     };
-    axios.post(process.env.REACT_APP_BACKEND_URL + "api/user/login", data, config).then((response) => {
-      dispatch(setLoading(false))
-      console.log(response);
-      localStorage.setItem("userId", response.data.id)
-      localStorage.setItem("access_token", response.data.access_token)
-      localStorage.setItem("refresh_token", response.data.refresh_token)
-      enqueueSnackbar("Logged in successfully", {
-        variant: 'success',
-      });
-      navigate("/")
-    })
-      .catch((error) => {
-        console.log("hi");
-        console.log(error);
-        enqueueSnackbar("Invalid  Credentials", {
-          variant: 'error',
+    axios
+      .post(process.env.REACT_APP_BACKEND_URL + "api/user/login", data, config)
+      .then((response) => {
+        setLoading(false);
+        console.log(response);
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("refresh_token", response.data.refresh_token);
+        enqueueSnackbar("Logged in successfully", {
+          variant: "success",
         });
-        dispatch(setLoading(false))
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          enqueueSnackbar("Invalid  Credentials", {
+            variant: "error",
+          });
+        } else {
+          enqueueSnackbar("Some error occured. Please try again later", {
+            variant: "error",
+          });
+        }
+        setLoading(false);
       });
   };
   return (
     <>
-      {loadingState.loading && <Loader />}
+      {loading && <Loader />}
       <div className="LoginPage_main_container">
         <div className="LoginPage_container">
           <div className="LoginPage_main">
@@ -66,34 +71,33 @@ function LoginPage() {
               <div className="LoginPage_rightcomponent">
                 <img className="LoginPage_logo" src={insta_logo} alt="play" />
                 <div className="LoginPage_signin">
-                  <div>
-                    <input
-                      className="LoginPage_text"
-                      type="text"
-                      placeholder="Phone number, username or email"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                      className="LoginPage_text"
-                      type="password"
-                      placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button className="LoginPage_button"
-                      onClick={() => signin()}
-                    >Sign In</button>
-                  </div>
+                  <form onSubmit={signin}>
+                    <input className="LoginPage_text" type="text" placeholder="Phone number, username or email" onChange={(e) => setEmail(e.target.value)} />
+                    <input className="LoginPage_text" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                    <button className="LoginPage_button" onClick={(e) => signin(e)} type="submit">
+                      Sign In
+                    </button>
+                  </form>
 
                   <div className="Login_ordiv">
                     <div className="Login_divider"></div>
                     <div className="Login_or">OR</div>
                     <div className="Login_divider"></div>
                   </div>
-                  <div className="Login_fb" onClick={() => FbLogin()} >
-                    <img src={fb} width="15px" style={{ marginRight: "5px" }} alt="play" />
-                    Log in with facebook
+                  <a href="http://localhost:5000/api/auth/google">
+                    <div className="Login_fb">
+                      <img src={fb} width="15px" style={{ marginRight: "5px" }} alt="play" />
+                      Log in with facebook
+                    </div>
+                  </a>
+                  <div
+                    className="Login_forgot"
+                    onClick={() => {
+                      googleSignIn();
+                    }}
+                  >
+                    Forgot password
                   </div>
-                  <div className="Login_forgot">Forgot password</div>
                 </div>
               </div>
               <div className="LoginPage_signupoption">

@@ -1,0 +1,83 @@
+.drawer {
+  overflow: hidden;
+}
+
+.drawer_paper {
+  left: 240px !important;
+  box-shadow: none !important;
+  border-right: 1px solid gray;
+  border-left: 1px solid gray;
+}
+
+.backdrop {
+  background-color: transparent !important;
+}
+.toolbar {
+  padding-top: 8px;
+}
+.text_h1 {
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  padding-top: 15px;
+  padding-bottom: 36px;
+}
+.input {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+.input::before {
+  border-bottom: 0px !important;
+}
+.input::after {
+  border-bottom: 0px !important;
+}
+.input input {
+  padding: 0px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  font-size: 16px;
+}
+.search_Input {
+  width: 300px !important;
+}
+.box_output {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.box_output::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+}
+
+.box_output::-webkit-scrollbar-track {
+  background: transparent; /* Background of the scrollbar track */
+}
+
+.box_output::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners for the scrollbar thumb */
+}
+
+.box_output::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Color of the scrollbar thumb on hover */
+}
+
+.primaryProps {
+  font-weight: 600 !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.secondaryProps {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media screen and (max-width:1260px) {
+  .drawer_paper{
+    left: 68px !important;
+  }
+  
+}

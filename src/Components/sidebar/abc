@@ -1,0 +1,51 @@
+      <Drawer
+        sx={{
+        //   width: state == 0 ? 68 : 240,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            // width: state == 0 ? 68 : 240,
+            boxSizing: "border-box",
+            display: "flex",
+            justifyContent: "space-between",
+          },
+        }}
+        PaperProps={{ className: styles.drawer_paper }}
+        className={styles.drawer}
+        variant="permanent"
+        anchor="left"
+      >
+        <div>
+          <List>
+            <ListItem className={styles.listItemLogo} onClick={() => navigate("/")}>
+               <img src={insta_logo} alt="instalogo" width="105px" onClick={() => navigate("/")} className={styles.logo_large} />
+              <img src={insta_logo_small} alt="instalogo" width="24px" onClick={() => navigate("/")} className={styles.logo_small} />
+            </ListItem>
+            {["Home", "Search", "Explore", "Reels", "Messages"].map((text, index) => (
+              <ListItem key={text} disablePadding onClick={()=>handleClick(index)}>
+                <ListItemButton className={styles.listItemBtn}>
+                  <ListItemIcon className={styles.icon}>{iconsArray[index]}</ListItemIcon>
+                  <ListItemText primary={text} className={styles.text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+            <ListItem disablePadding>
+              <ListItemButton className={styles.listItemBtn}>
+                <ListItemAvatar className={styles.listItemBtn}>
+                  <Avatar sizes="24px" className={styles.avatar}>
+                    {/* <ImageIcon /> */}
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Profile" className={styles.text} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </div>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton className={styles.listItemBtn}>
+              <ListItemIcon className={styles.icon}>{<IoMenuOutline size={"24px"} color="black" />}</ListItemIcon>
+              <ListItemText primary="More" className={styles.text} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Drawer>

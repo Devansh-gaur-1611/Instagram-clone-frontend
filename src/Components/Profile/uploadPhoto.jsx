@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./uploadPhoto.module.css";
-import { PostAuthRequest } from "../Post/authRequest";
+import { PostAuthRequest } from "../../helper/authRequest";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { uploadFiles } from "./helper";
 
 const UploadPhoto = ({ profileImageUrl, setIsOpen }) => {
   const { enqueueSnackbar } = useSnackbar();
+  const [loading,setLoading] = useState(false)
   const navigate = useNavigate();
   const input = React.useRef();
   const removeImage = () => {
     const data = {
-      userId: localStorage.getItem("userId"),
       oldImageUrl: profileImageUrl,
     };
     const successFxn = (response) => {
@@ -19,7 +19,7 @@ const UploadPhoto = ({ profileImageUrl, setIsOpen }) => {
       setIsOpen(false);
     };
 
-    PostAuthRequest("api/user/removeProfilePic", data, successFxn, enqueueSnackbar, navigate);
+    PostAuthRequest("api/user/removeProfilePic", data, successFxn, enqueueSnackbar, navigate,setLoading);
   };
 
   const selectImage = () => {
@@ -34,7 +34,7 @@ const UploadPhoto = ({ profileImageUrl, setIsOpen }) => {
         setIsOpen(false);
         window.location.reload();
       };
-      uploadFiles(e.target.files[0], profileImageUrl, enqueueSnackbar, navigate, successFxn);
+      uploadFiles(e.target.files[0], profileImageUrl, enqueueSnackbar, navigate, successFxn,setLoading);
       // setIsOpen(false)
     }
   };

@@ -2,12 +2,14 @@
     width:100%;
     display: flex;
     justify-content: center;
-    background-color:#fafafa;
-    min-height: calc(100vh - 60px);
+    /* background-color:#d01818; */
+    background-color:#ffffff;
+    min-height: calc(100vh);
+    flex-grow: 1;
 }
 
 .container{
-    width: 925px;
+    width: 962px;
     display: flex;
     justify-content: center;
 }
@@ -15,8 +17,11 @@
 .left_container{
     margin-right:32px;
 }
-@media screen and (max-width:1000px) {
+@media screen and (max-width:1060px) {
     .left_container{
         margin-right:0px
+    }
+    .right_container{
+        display: none;
     }
 }

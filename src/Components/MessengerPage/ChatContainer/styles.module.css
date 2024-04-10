@@ -1,0 +1,138 @@
+.main_container {
+  width: 100%;
+  background-color: #fafafa;
+  /* min-height: calc(100vh - 60px); */
+  height: 100%;
+  position: relative;
+  flex-grow: 1;
+}
+
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.t_left_div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-grow: 1;
+}
+.text_1 {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  font-family: "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", Helvetica, Arial, sans-serif;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.body_container {
+  width: 100%;
+  overflow-x: hidden;
+  position: absolute;
+  bottom: 50px;
+  top: 64px;
+  height: calc(100% - 114px);
+  /* flex-grow: 1; */
+  display: flex;
+  /* justify-content: flex-end; */
+  flex-direction: column;
+  border: 1px solid red;
+  overflow-y: auto;
+  flex-shrink: 1;
+}
+
+.m_main_container {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-self: flex-end;
+  flex: 1;
+}
+.m_date_container {
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: rgb(119, 119, 119);
+}
+
+.m_container_right {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.m_container_left {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.msg_container_right {
+  max-width: 60%;
+  width: fit-content;
+  padding: 8px;
+  border-radius: 25px;
+  color: white;
+  background-color: #3797f0;
+  margin-right: 10px;
+
+  word-wrap: break-word;
+}
+
+.msg_container_left {
+  max-width: 60%;
+  width: fit-content;
+  padding: 8px;
+  border-radius: 25px;
+  color: black;
+  background-color: #efefef;
+  margin-left: 10px;
+}
+
+.footer {
+  width: 100%;
+
+  height: 50px;
+  position: absolute;
+  background-color: white;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form {
+  width: calc(100% - 20px);
+  height: 35px;
+  border-radius: 40px;
+  border: 1px solid rgb(169 163 163 / 80%);
+  display: flex;
+  align-items: center;
+}
+.input {
+  width: calc(100% - 20px);
+  margin: 0 10px 0 10px;
+  border: none;
+  outline: none;
+}
+.input::placeholder {
+  color: gray;
+}
+.btn {
+  visibility: hidden;
+}
+
+@media screen and (max-width:951px){
+  .main_container{
+    max-height: 100vh;
+    min-height: 100vh;
+  }
+}

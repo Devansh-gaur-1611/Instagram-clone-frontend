@@ -48,6 +48,11 @@
   padding-left: 5px;
 }
 
+.navbar_searchbar:focus .search_icon {
+  display: none !important;
+  visibility: hidden;
+}
+
 .icon_container {
   display: flex;
   align-items: center;
@@ -119,15 +124,19 @@
   width: 24px;
   height: 24px;
 }
+.bottomNavigation{
+  width: 100%;
+  height: 44px !important;
+}
 
-.MuiAvatar-root {
-  width: 24px;
-  height: 24px;
+.avatar{
+  width: 24px !important;
+  height: 24px !important;
 }
 
 @media screen and (max-width: 470px) {
   .bottombar_main_container {
-    width: calc(100vw - 15px);
+    width: calc(100vw);
     height: 44px;
     display: flex;
     align-items: center;

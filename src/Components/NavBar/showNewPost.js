@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./NewPostModal.module.css";
 import { uploadFiles } from "./helper"
 import { useNavigate } from "react-router-dom"
 import { useSnackbar } from 'notistack';
 import { useDispatch } from "react-redux"
+import Loader_small from "../Loader/Loader_small";
 
 const ShowNewPostModal = ({ setNewPostViewOpen, file }) => {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const [loading,setLoading] = useState(false)
 
     const sharePost = () => {
         const successFxn = (response) => {
@@ -16,12 +17,12 @@ const ShowNewPostModal = ({ setNewPostViewOpen, file }) => {
             alert("Post created successfully")
             setNewPostViewOpen(false)
         }
-        uploadFiles(file, file.type.split("/")[0], successFxn, enqueueSnackbar, navigate, dispatch)
+        uploadFiles(file, file.type.split("/")[0], successFxn, enqueueSnackbar, navigate, setLoading)
     }
 
 
     return (
-        <>
+        <>{loading && <Loader_small/>}
             <div className={styles.darkBG} onClick={() => setNewPostViewOpen(false)} />
             <button className={styles.closeBtn} onClick={() => setNewPostViewOpen(false)}>
                 <svg

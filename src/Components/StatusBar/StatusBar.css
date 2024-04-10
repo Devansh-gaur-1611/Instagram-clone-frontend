@@ -1,9 +1,9 @@
 .statusbar_container {
-  height: 80px;
-  width: 470px;
+  height: 120px;
+  width: 630px;
   background-color: white;
-  border: 1px solid rgb(219, 219, 219);
-  margin-top: 25px;
+  /* border: 1px solid rgb(219, 219, 219); */
+  margin-top: 10px;
   display: flex;
   overflow-x: scroll;
   padding: 16px 0px;
@@ -24,6 +24,8 @@
 .statusbar_status_create {
   min-width: 60px;
   min-height: 60px;
+  width: 60px;
+  height: 60px;
   margin-bottom: 5px;
   cursor: pointer;
 }
@@ -61,7 +63,7 @@
 }
 
 
-@media screen and (max-width:470px){
+@media screen and (max-width:630px){
   .statusbar_container{
     background-color:transparent;
     border: none;
