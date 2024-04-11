@@ -1,6 +1,6 @@
 import React from "react";
 import MainContent from "../Components/MainContent/MainContent";
-import VideoV1 from "../Components/videoPlayer/v1/videoV1";
+// import VideoV1 from "../Components/videoPlayer/v1/videoV1";
 const HomePage = () => {
   return (
     <>
